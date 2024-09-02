@@ -1,151 +1,151 @@
-import streamlit as st
 import pandas as pd
-import math
-from pathlib import Path
+import plotly.express as px
+import plotly.graph_objects as go
+import streamlit as st
 
-# Set the title and favicon that appear in the Browser's tab bar.
-st.set_page_config(
-    page_title='GDP dashboard',
-    page_icon=':earth_americas:', # This is an emoji shortcode. Could be a URL too.
+df = pd.read_csv("bank.csv")
+
+st.title("Analyse de bank.csv")
+
+# Distribution de l'âge
+
+st.subheader("Histogramme de distribution de l'âge des clients")
+fig1 = px.histogram(df, x='age', nbins=10)
+fig1.update_layout(
+    xaxis_title="Age des clients",
+    yaxis_title="Nombre de clients",
+    title_text="Histogramme de distribution de l'âge des clients",
+    legend_title_text="Groupe d'âge",
+    bargap=0.1
+)
+st.plotly_chart(fig1)
+
+# Répartition par statut marital
+
+st.subheader("Histogramme de Répartition par statut marital")
+fig2 = px.histogram(df, x='marital', nbins=3)
+fig2.update_layout(
+    xaxis_title="Statut marital",
+    yaxis_title="Nombre de clients",
+    title_text="Histogramme de Répartition par statut marital",
+    legend_title_text="Répartition marital",
+    bargap=0.1
+)
+st.plotly_chart(fig2)
+
+# Répartition par niveau d'éducation
+
+st.subheader("Histogramme de Répartition par niveau d'éducation")
+fig3 = px.histogram(df, x='education', nbins=4)
+fig3.update_layout(
+    xaxis_title="Niveau d'éducation",
+    yaxis_title="Nombre de clients",
+    title_text="Histogramme de Répartition par niveau d'éducation",
+    legend_title_text="Répartition niveau d'éducation",
+    bargap=0.1
+)
+st.plotly_chart(fig3)
+
+# Répartition des soldes
+
+st.subheader("Histogramme de Répartition par solde sur le compte")
+fig4 = px.histogram(df, x='balance', nbins=5)
+fig4.update_layout(
+    xaxis_title="Solde sur le compte",
+    yaxis_title="Nombre de clients",
+    title_text="Histogramme de Répartition par solde sur le compte",
+    legend_title_text="Répartition par solde sur le compte",
+    bargap=0.1,
+    xaxis_tickprefix="€"
+)
+st.plotly_chart(fig4)
+
+# Répartition des soldes en fonction de l'âge, du statut marital, et le niveau d'éducation
+
+st.subheader("Histogramme de Répartition des soldes en fonction de l'âge, du statut marital, et le niveau d'éducation")
+balance_moyenne_all = df.groupby(['education', 'marital'])['balance'].mean().reset_index()
+fig5 = px.bar(balance_moyenne_all, x='education', y='balance', color = 'marital', barmode ='group')
+fig5.update_layout(
+    xaxis_title="Niveau d'éducation",
+    yaxis_title="Solde moyen ",
+    title_text="Solde moyen par niveau d'éducation",
+    yaxis_tickprefix="€",  # Ajout du symbole de l'euro pour le solde
+    legend_title_text='Statut marital'
+)
+st.plotly_chart(fig5)
+
+# Comparaison du solde prêt immo ou non
+moyenne_balance_housing = df.groupby('housing')['balance'].mean().reset_index()
+
+st.subheader("Histogramme de Répartition du solde par prêt")
+fig6 = px.histogram(moyenne_balance_housing, x='housing',y='balance')
+fig6.update_layout(
+    xaxis_title="Prêt engagé ou non",
+    yaxis_title="Solde sur le compte",
+    title_text="Histogramme de Répartition du solde par prêt",
+    bargap=0.1,
+)
+st.plotly_chart(fig6)
+
+# Analyse de la durée des appels
+
+st.subheader("Histogramme de Répartition des durées d'appels de la campagne Marketing")
+fig7 = px.histogram(df, x='duration')
+fig7.update_layout(
+    xaxis_title="Durée de l'appel",
+    yaxis_title="Nombre d'appels",
+    title_text="Histogramme de Répartition des durées d'appels de la campagne Marketing",
+    bargap=0.1,
+)
+st.plotly_chart(fig7)
+
+# Analyse de la campagne par mois
+nb_contact_mois = df['month'].value_counts().reset_index()
+nb_contact_mois.columns = ['month', 'count']
+
+month_order = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+nb_contact_mois['month'] = pd.Categorical(nb_contact_mois['month'], categories=month_order, ordered=True)
+contacts_by_month = nb_contact_mois.sort_values('month')
+
+st.subheader("Histogramme du nombre de contacts de la campagne marketing par mois")
+fig8 = px.bar(contacts_by_month, x='month', y='count')
+
+# Personnalisation des légendes
+fig8.update_layout(
+    xaxis_title="Mois",
+    yaxis_title="Nombre de contacts",
+    title_text="Histogramme du nombre de contacts de la campagne marketing par mois",
 )
 
-# -----------------------------------------------------------------------------
-# Declare some useful functions.
+# Affichage du graphique
+st.plotly_chart(fig8)
 
-@st.cache_data
-def get_gdp_data():
-    """Grab GDP data from a CSV file.
+# Proportion de souscription par groupe
 
-    This uses caching to avoid having to read the file every time. If we were
-    reading from an HTTP endpoint instead of a file, it's a good idea to set
-    a maximum age to the cache with the TTL argument: @st.cache_data(ttl='1d')
-    """
+# Répartition des soldes en fonction du statut marital, et le niveau d'éducation
 
-    # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
-    DATA_FILENAME = Path(__file__).parent/'data/gdp_data.csv'
-    raw_gdp_df = pd.read_csv(DATA_FILENAME)
+# Calculer le taux de souscription par niveau d'éducation et statut marital
+deposit_summary = df.groupby(['education', 'marital', 'deposit']).size().reset_index(name='count')
+total_summary = df.groupby(['education', 'marital']).size().reset_index(name='total')
+deposit_summary = pd.merge(deposit_summary, total_summary, on=['education', 'marital'])
+deposit_summary['proportion'] = deposit_summary['count'] / deposit_summary['total']
 
-    MIN_YEAR = 1960
-    MAX_YEAR = 2022
+st.subheader("Histogramme de Répartition des soldes en fonction du statut marital, et le niveau d'éducation")
+# Création du graphique à barres groupées
+fig9 = px.bar(deposit_summary, x='education', y='proportion', color='deposit', barmode='group', facet_col='marital', title="Proportion de souscription par niveau d'éducation et statut marital")
 
-    # The data above has columns like:
-    # - Country Name
-    # - Country Code
-    # - [Stuff I don't care about]
-    # - GDP for 1960
-    # - GDP for 1961
-    # - GDP for 1962
-    # - ...
-    # - GDP for 2022
-    #
-    # ...but I want this instead:
-    # - Country Name
-    # - Country Code
-    # - Year
-    # - GDP
-    #
-    # So let's pivot all those year-columns into two: Year and GDP
-    gdp_df = raw_gdp_df.melt(
-        ['Country Code'],
-        [str(x) for x in range(MIN_YEAR, MAX_YEAR + 1)],
-        'Year',
-        'GDP',
-    )
-
-    # Convert years from string to integers
-    gdp_df['Year'] = pd.to_numeric(gdp_df['Year'])
-
-    return gdp_df
-
-gdp_df = get_gdp_data()
-
-# -----------------------------------------------------------------------------
-# Draw the actual page
-
-# Set the title that appears at the top of the page.
-'''
-# :earth_americas: GDP dashboard
-
-Browse GDP data from the [World Bank Open Data](https://data.worldbank.org/) website. As you'll
-notice, the data only goes to 2022 right now, and datapoints for certain years are often missing.
-But it's otherwise a great (and did I mention _free_?) source of data.
-'''
-
-# Add some spacing
-''
-''
-
-min_value = gdp_df['Year'].min()
-max_value = gdp_df['Year'].max()
-
-from_year, to_year = st.slider(
-    'Which years are you interested in?',
-    min_value=min_value,
-    max_value=max_value,
-    value=[min_value, max_value])
-
-countries = gdp_df['Country Code'].unique()
-
-if not len(countries):
-    st.warning("Select at least one country")
-
-selected_countries = st.multiselect(
-    'Which countries would you like to view?',
-    countries,
-    ['DEU', 'FRA', 'GBR', 'BRA', 'MEX', 'JPN'])
-
-''
-''
-''
-
-# Filter the data
-filtered_gdp_df = gdp_df[
-    (gdp_df['Country Code'].isin(selected_countries))
-    & (gdp_df['Year'] <= to_year)
-    & (from_year <= gdp_df['Year'])
-]
-
-st.header('GDP over time', divider='gray')
-
-''
-
-st.line_chart(
-    filtered_gdp_df,
-    x='Year',
-    y='GDP',
-    color='Country Code',
+# Personnalisation des légendes
+fig9.update_layout(
+    xaxis_title="Niveau d'éducation",
+    yaxis_title="Proportion de souscription",
+    title_text="Proportion de souscription par niveau d'éducation, statut marital et âge",
+    legend_title_text='Souscription'
 )
-
-''
-''
+st.plotly_chart(fig9)
 
 
-first_year = gdp_df[gdp_df['Year'] == from_year]
-last_year = gdp_df[gdp_df['Year'] == to_year]
 
-st.header(f'GDP in {to_year}', divider='gray')
 
-''
 
-cols = st.columns(4)
 
-for i, country in enumerate(selected_countries):
-    col = cols[i % len(cols)]
 
-    with col:
-        first_gdp = first_year[first_year['Country Code'] == country]['GDP'].iat[0] / 1000000000
-        last_gdp = last_year[last_year['Country Code'] == country]['GDP'].iat[0] / 1000000000
-
-        if math.isnan(first_gdp):
-            growth = 'n/a'
-            delta_color = 'off'
-        else:
-            growth = f'{last_gdp / first_gdp:,.2f}x'
-            delta_color = 'normal'
-
-        st.metric(
-            label=f'{country} GDP',
-            value=f'{last_gdp:,.0f}B',
-            delta=growth,
-            delta_color=delta_color
-        )
