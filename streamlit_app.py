@@ -7,7 +7,7 @@ df = pd.read_csv("bank.csv")
 
 st.title("Analyse de bank.csv")
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'", "Analyse de la variable 'solde'"])
+selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'", "Analyse de la variable 'solde'", "Crédits"])
 
 if selection == "Analyse Campagne Marketing":
     st.title("Analyse de la campagne Marketing")
@@ -660,7 +660,16 @@ elif selection == "Analyse de la variable 'solde'":
         legend_title_text='Souscription'
     )
     st.plotly_chart(fig9)
-
+elif selection == "Crédits":
+    st.title("Crédits")
+    st.subheader("Participants au projet")
+    st.write("""
+    - Camille
+    - Clément
+    - Arnaud
+    - Julien
+    """)
+    st.write("Projet réalisé par l'équipe dans le cadre de notre formation de Data Analyst.")
 
 
 
