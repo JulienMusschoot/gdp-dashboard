@@ -9,15 +9,9 @@ st.title("Analyse de bank.csv")
 st.sidebar.title("Navigation")
 selection = st.sidebar.radio("Aller à", ["Campagne Marketing", "Données Démographiques", "Analyse Variable 'deposit'"])
 
-
-#################################################################
-####################CAMPAGNE MARKETING###########################
-#################################################################
-
 if selection == "Campagne Marketing":
     st.title("Analyse de la campagne Marketing")
     # Analyse de la durée des appels
-
     st.subheader("Histogramme de Répartition des durées d'appels de la campagne Marketing")
     fig7 = px.histogram(df, x='duration')
     fig7.update_layout(
@@ -82,15 +76,6 @@ if selection == "Campagne Marketing":
 
     # Affichage du graphique
     st.plotly_chart(fig8)
-
-    #################################################################
-    #################### FIN CAMPAGNE MARKETING #####################
-    #################################################################
-
-    #################################################################
-    #################### DONNEES DEMOGRAPHIQUES #####################
-    #################################################################
-
 elif selection == "Données Démographiques":
     st.title("Données Démographiques")
     
@@ -198,14 +183,6 @@ elif selection == "Données Démographiques":
         legend_title_text='Souscription'
     )
     st.plotly_chart(fig9)
-
-    #################################################################
-    #################### FIN DONNEES DEMOGRAPHIQUES #####################
-    #################################################################
-
- #################################################################
-    #################### DEBUT ANALYSE VARIABLE DEPOSIT #####################
-    #################################################################
 elif selection == "Analyse Variable 'deposit'":
     st.title("Analyse Variable 'deposit'")
     # Histogramme deposit / âge du client
