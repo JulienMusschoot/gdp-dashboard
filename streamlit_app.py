@@ -143,6 +143,519 @@ fig9.update_layout(
 )
 st.plotly_chart(fig9)
 
+########################################################## Début Graphs Arnaud
+
+# Histogramme deposit / âge du client
+
+st.subheader("Histogramme de Souscription au dépôt selon l'âge du client")
+
+fig10 = go.Figure()
+
+fig10.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["age"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=75
+))
+
+fig10.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["age"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=75
+))
+
+fig10.update_layout(
+    title="Souscription au dépôt selon l'âge du client",
+    xaxis_title="Âge",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig10)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / job
+st.subheader("Histogramme de Souscription au dépôt selon l'emploi")
+
+fig11 = go.Figure()
+
+fig11.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["job"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=12
+))
+
+fig11.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["job"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=12
+))
+
+fig11.update_layout(
+    title="Souscription au dépôt selon l'emploi",
+    xaxis_title="Emploi",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig11)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / balance
+st.subheader("Souscription au dépôt selon les économies personnelles")
+
+fig12 = go.Figure()
+
+fig12.add_trace(go.Histogram(
+    x=df[(df["deposit"] == "no") & (df["balance"] > -800) & (df["balance"] < 4000)]["balance"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=25
+))
+
+fig12.add_trace(go.Histogram(
+    x=df[(df["deposit"] == "yes") & (df["balance"] > -800) & (df["balance"] < 4000)]["balance"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=25,
+))
+
+fig12.update_layout(
+    title="Souscription au dépôt selon les économies personnelles",
+    xaxis_title="Balance",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig12)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / statut marital
+st.subheader("Souscription au dépôt selon le statut marital")
+
+fig13 = go.Figure()
+
+fig13.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["marital"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=12
+))
+
+fig13.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["marital"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=12
+))
+
+fig13.update_layout(
+    title="Souscription au dépôt selon le statut marital",
+    xaxis_title="Statut marital",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig13)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / education
+st.subheader("Souscription au dépôt selon le niveau d'études")
+
+fig14 = go.Figure()
+
+fig14.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["education"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=12
+))
+
+fig14.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["education"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=12
+))
+
+fig14.update_layout(
+    title="Souscription au dépôt selon le niveau d'études",
+    xaxis_title="Niveau d'études",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig14)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / prêt maison
+st.subheader("Souscription au dépôt selon si le client a un prêt immobilier")
+
+fig16 = go.Figure()
+
+fig16.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["housing"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=30
+))
+
+fig16.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["housing"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=30
+))
+
+fig16.update_layout(
+    title="Souscription au dépôt selon si le client a un prêt immobilier",
+    xaxis_title="A un prêt immobilier",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig16)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / prêt personnel
+st.subheader("Souscription au dépôt selon si le client a un prêt personnel")
+
+fig17 = go.Figure()
+
+fig17.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["loan"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=30
+))
+
+fig17.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["loan"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=30
+))
+
+fig17.update_layout(
+    title="Souscription au dépôt selon si le client a un prêt personnel",
+    xaxis_title="A un prêt personnel",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig17)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / nombre d'appels
+st.subheader("Souscription au dépôt selon le nombre d'appels")
+
+fig18 = go.Figure()
+
+fig18.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"][df["campaign"] <= 8]["campaign"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=8
+))
+
+fig18.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"][df["campaign"] <= 8]["campaign"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=8
+))
+
+fig18.update_layout(
+    title="Souscription au dépôt selon le nombre d'appels",
+    xaxis_title="Nombre d'appels",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig18)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / mois de l'appel
+
+#Création d'un ordre calendaire pour clarifier le graphique suivant
+month_order = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+df['month'] = pd.Categorical(df['month'], categories=month_order, ordered=True)
+df['month_numeric'] = df['month'].cat.codes
+
+st.subheader("Souscription au dépôt selon le mois de l'appel")
+
+fig19 = go.Figure()
+
+fig19.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]['month_numeric'],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=len(month_order)
+))
+
+fig19.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]['month_numeric'],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=len(month_order)
+))
+
+fig19.update_layout(
+    title="Souscription au dépôt selon le mois de l'appel",
+    xaxis_title="Mois de l'appel",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
+    xaxis=dict(showgrid=False, 
+        tickvals=list(range(len(month_order))),
+        ticktext=month_order
+    )
+)
+
+st.plotly_chart(fig19)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / Nombre de contacts pré_campagne
+st.subheader("Souscription au dépôt selon le nombre de contacts avant cette campagne")
+
+fig20 = go.Figure()
+
+fig20.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"][df["previous"]<10]["previous"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=10
+))
+
+fig20.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"][df["previous"]<10]["previous"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=10
+))
+
+fig20.update_layout(
+    title="Souscription au dépôt selon le nombre de contacts avant cette campagne",
+    xaxis_title="Nombre de contacts pré-campagne",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig20)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / délai dernier contact
+st.subheader("Souscription au dépôt selon le délai depuis le dernier contact")
+
+fig21 = go.Figure()
+
+fig21.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["pdays"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=10
+))
+
+fig21.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["pdays"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=10
+))
+
+fig21.update_layout(
+    title="Souscription au dépôt selon le délai depuis le dernier contact",
+    xaxis_title="Nombre de jours depuis le dernier contact",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig21)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / Résultat de la campagne précédente
+st.subheader("Souscription au dépôt selon le résultat de la campagne précédente")
+
+fig22 = go.Figure()
+
+fig22.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["poutcome"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=10
+))
+
+fig22.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["poutcome"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=10
+))
+
+fig22.update_layout(
+    title="Souscription au dépôt selon le résultat de la campagne précédente",
+    xaxis_title="Résultat de la campagne précédente",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig22)
+
+#------------------------------------------------------------
+#------------------------------------------------------------
+#------------------------------------------------------------
+
+
+# Histogramme deposit / jour de l'appel
+st.subheader("Souscription au dépôt selon le jour de l'appel")
+
+fig23 = go.Figure()
+
+fig23.add_trace(go.Histogram(
+    x=df[df["deposit"] == "no"]["day"],
+    name="No",
+    marker_color="#222A2A",
+    opacity=0.7,
+    nbinsx=31
+))
+
+fig23.add_trace(go.Histogram(
+    x=df[df["deposit"] == "yes"]["day"],
+    name="Yes",
+    marker_color="#19D3F3",
+    opacity=0.7,
+    nbinsx=31
+))
+
+fig23.update_layout(
+    title="Souscription au dépôt selon le jour de l'appel",
+    xaxis_title="Jour de l'appel dans le mois",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    legend_title="Souscription",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+)
+
+st.plotly_chart(fig23)
 
 
 
