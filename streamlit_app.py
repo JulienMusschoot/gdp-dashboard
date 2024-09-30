@@ -762,7 +762,6 @@ elif selection == "Analyse de la variable 'Default'":
     st.title("Analyse Variable 'Default'")
     fig26 = go.Figure()
 
-
     counts = df['default'].value_counts()
 
     fig26.add_trace(go.Bar(
@@ -800,27 +799,18 @@ elif selection == "Analyse de la variable 'balance'":
     st.plotly_chart(fig27)
 elif selection == "Analyse de la variable 'duration'":
     st.title("Analyse de la variable 'duration'")
-    colors = ["#19D3F3", "#4B4B4B"]
-
     fig30 = go.Figure()
-
-    for response in ['no', 'yes']:
-        fig30.add_trace(go.Histogram(
-            x=df[df['deposit'] == response]['contact'],
-            name=response,
-            marker_color=colors[1] if response == 'yes' else colors[0],
-            opacity=0.7
-        ))
-
+    fig30.add_trace(go.Box(
+        x=df["duration"],
+        name="Duration (min)",
+        marker_color="#222A2A",
+        opacity=0.7
+    ))
     fig30.update_layout(
-        title="Distribution de la variable Deposit selon le type de Contact",
-        xaxis_title="Type de Contact",
-        yaxis_title="Nombre de Clients",
-        barmode="group",
+        title="Distribution de la variable duration",
         plot_bgcolor="rgba(0,0,0,0)",
         xaxis=dict(showgrid=False),
-        yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
-        showlegend=True
+        yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
     )
     st.plotly_chart(fig30)
 elif selection == "Crédits":
