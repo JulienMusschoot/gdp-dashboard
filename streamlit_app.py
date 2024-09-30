@@ -42,6 +42,22 @@ if selection == "Analyse Campagne Marketing":
 
     # Affichage du graphique
     st.plotly_chart(fig8)
+
+    st.title("Analyse de la variable 'duration'")
+    fig30 = go.Figure()
+    fig30.add_trace(go.Box(
+        x=df["duration"],
+        name="Duration (min)",
+        marker_color="#222A2A",
+        opacity=0.7
+    ))
+    fig30.update_layout(
+        title="Distribution de la variable duration",
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(showgrid=False),
+        yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+    )
+    st.plotly_chart(fig30)
 elif selection == "Analyse Données Démographiques":
     st.title("Données Démographiques")
     # Distribution de l'âge
@@ -797,22 +813,6 @@ elif selection == "Analyse de la variable 'balance'":
     yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
     )
     st.plotly_chart(fig27)
-elif selection == "Analyse de la variable 'duration'":
-    st.title("Analyse de la variable 'duration'")
-    fig30 = go.Figure()
-    fig30.add_trace(go.Box(
-        x=df["duration"],
-        name="Duration (min)",
-        marker_color="#222A2A",
-        opacity=0.7
-    ))
-    fig30.update_layout(
-        title="Distribution de la variable duration",
-        plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=False),
-        yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
-    )
-    st.plotly_chart(fig30)
 elif selection == "Crédits":
     st.title("Crédits")
     st.subheader("Participants au projet")
