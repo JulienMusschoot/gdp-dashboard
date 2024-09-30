@@ -7,7 +7,7 @@ df = pd.read_csv("bank.csv")
 
 st.title("Analyse de bank.csv")
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'","Analyse Variable 'Default'" ,"Analyse de la variable 'balance'", "Analyse de la variable 'solde'", "Crédits"])
+selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'","Analyse Variable 'Default'","Analyse de la variable 'balance'", "Analyse de la variable 'solde'", "Crédits"])
 
 if selection == "Analyse Campagne Marketing":
     st.title("Analyse de la campagne Marketing")
@@ -772,12 +772,12 @@ elif selection == "Analyse de la variable 'solde'":
         legend_title_text='Souscription'
     )
     st.plotly_chart(fig9)
-elif selection == "Analyse de la variable 'Default'":
+elif selection == "Analyse Variable 'Default'":
     st.title("Analyse Variable 'Default'")
     st.subheader("Distribution de la variable default")
     fig31 = go.Figure()
 
-    counts = df['deposit'].value_counts()
+    counts = df['default'].value_counts()
 
     fig31.add_trace(go.Bar(
     x=counts.index,
