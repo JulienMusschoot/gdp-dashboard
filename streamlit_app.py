@@ -776,6 +776,7 @@ elif selection == "Analyse de la variable 'solde'":
     st.plotly_chart(fig9)
 elif selection == "Analyse de la variable 'Default'":
     st.title("Analyse Variable 'Default'")
+    st.subheader("Distribution de la variable default")
     fig31 = go.Figure()
 
     counts = df['default'].value_counts()
