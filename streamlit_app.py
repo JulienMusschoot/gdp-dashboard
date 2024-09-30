@@ -776,18 +776,18 @@ elif selection == "Analyse de la variable 'solde'":
     st.plotly_chart(fig9)
 elif selection == "Analyse de la variable 'Default'":
     st.title("Analyse Variable 'Default'")
-    fig26 = go.Figure()
+    fig31 = go.Figure()
 
     counts = df['default'].value_counts()
 
-    fig26.add_trace(go.Bar(
+    fig31.add_trace(go.Bar(
     x=counts.index,
     y=counts.values,
     marker_color=['#19D3F3', '#4B4B4B'],
     opacity=0.7
     ))
 
-    fig26.update_layout(
+    fig31.update_layout(
     title="Distribution de default",
     xaxis_title="Default",
     yaxis_title="Nombre de clients",
@@ -796,7 +796,7 @@ elif selection == "Analyse de la variable 'Default'":
     yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
     showlegend=False
     )
-    st.plotly_chart(fig26)
+    st.plotly_chart(fig31)
 elif selection == "Analyse de la variable 'balance'":
     st.title("Analyse Variable 'balance'")
     fig27 = go.Figure()
