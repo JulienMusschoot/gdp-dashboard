@@ -152,8 +152,6 @@ elif selection == "Analyse Variable 'deposit'":
     st.subheader("Distribution de la variable deposit")
 
     fig29= go.Figure()
-
-
     counts = df['deposit'].value_counts()
 
     fig29.add_trace(go.Bar(
@@ -779,7 +777,7 @@ elif selection == "Analyse de la variable 'Default'":
     st.subheader("Distribution de la variable default")
     fig31 = go.Figure()
 
-    counts = df['default'].value_counts()
+    counts = df['deposit'].value_counts()
 
     fig31.add_trace(go.Bar(
     x=counts.index,
