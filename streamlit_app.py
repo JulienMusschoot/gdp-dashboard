@@ -7,7 +7,7 @@ df = pd.read_csv("bank.csv")
 
 st.title("Analyse de bank.csv")
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'","Analyse Variable 'Default'" ,"Analyse de la variable 'balance'","Analyse de la variable 'duration'", "Analyse de la variable 'solde'", "Crédits"])
+selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'","Analyse Variable 'Default'" ,"Analyse de la variable 'balance'", "Analyse de la variable 'solde'", "Crédits"])
 
 if selection == "Analyse Campagne Marketing":
     st.title("Analyse de la campagne Marketing")
