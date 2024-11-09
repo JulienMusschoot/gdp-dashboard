@@ -7,7 +7,7 @@ df = pd.read_csv("bank.csv")
 
 st.title("Analyse de bank.csv")
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'", "Analyse de la variable 'solde'", "Crédits"])
+selection = st.sidebar.radio("Aller à", ["Analyse Campagne Marketing", "Analyse Données Démographiques", "Analyse Variable 'deposit'","Analyse Variable 'Default'","Analyse de la variable 'balance'", "Analyse de la variable 'solde'", "Crédits"])
 
 if selection == "Analyse Campagne Marketing":
     st.title("Analyse de la campagne Marketing")
@@ -42,6 +42,22 @@ if selection == "Analyse Campagne Marketing":
 
     # Affichage du graphique
     st.plotly_chart(fig8)
+
+    st.title("Analyse de la variable 'duration'")
+    fig30 = go.Figure()
+    fig30.add_trace(go.Box(
+        x=df["duration"],
+        name="Duration (min)",
+        marker_color="#222A2A",
+        opacity=0.7
+    ))
+    fig30.update_layout(
+        title="Distribution de la variable duration",
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(showgrid=False),
+        yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+    )
+    st.plotly_chart(fig30)
 elif selection == "Analyse Données Démographiques":
     st.title("Données Démographiques")
     # Distribution de l'âge
@@ -56,6 +72,23 @@ elif selection == "Analyse Données Démographiques":
         bargap=0.1
     )
     st.plotly_chart(fig1)
+
+    # Distribution de l'âge
+    st.subheader("Distribution de la variable Age")
+    fig24 = go.Figure()
+    fig24.add_trace(go.Box(
+    x=df["age"],
+    name="Âge",
+    marker_color="#222A2A",
+    opacity=0.7
+    ))
+    fig24.update_layout(
+    title="Distribution de la variable âge",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+    )
+    st.plotly_chart(fig24)
 
     # Répartition par statut marital
 
@@ -82,12 +115,66 @@ elif selection == "Analyse Données Démographiques":
         bargap=0.1
     )
     st.plotly_chart(fig3)
+
+    # Répartition par niveau d'éducation
+
+    st.subheader("Distribution de la variable education par job")
+    colors = ["#19D3F3", "#4B4B4B", "#1E90FF", "#060808"]
+
+    category_order = ["primary", "secondary", "tertiary", "unknown"]
+
+    fig25 = go.Figure()
+
+    for i, education in enumerate(category_order):
+        if education in df["education"].unique():
+            fig25.add_trace(go.Histogram(
+                x=df[df["education"] == education]["job"],
+                name=education,
+                marker_color=colors[i],
+                opacity=0.7
+            ))
+
+    fig25.update_layout(
+    title="Distribution de la variable education par job",
+    xaxis_title="Job",
+    yaxis_title="Nombre de clients",
+    barmode="group",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
+    showlegend=True
+    )
+
+    st.plotly_chart(fig25)
 elif selection == "Analyse Variable 'deposit'":
     st.title("Analyse Variable 'deposit'")
-    # Histogramme deposit / âge du client
+
+    st.subheader("Distribution de la variable deposit")
+
+    fig29= go.Figure()
+    counts = df['deposit'].value_counts()
+
+    fig29.add_trace(go.Bar(
+        x=counts.index,
+        y=counts.values,
+        marker_color=['#19D3F3', '#4B4B4B'],
+        opacity=0.7
+    ))
+
+    fig29.update_layout(
+        title="Distribution des dépôts",
+        xaxis_title="Dépôt",
+        yaxis_title="Nombre de clients",
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(showgrid=False),
+        yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
+        showlegend=False
+    )
+    st.plotly_chart(fig29)
 
     st.subheader("Histogramme de Souscription au dépôt selon l'âge du client")
 
+    # Histogramme deposit / âge du client
     fig10 = go.Figure()
 
     fig10.add_trace(go.Histogram(
@@ -595,9 +682,34 @@ elif selection == "Analyse Variable 'deposit'":
     )
 
     st.plotly_chart(fig23)
-elif selection == "Analyse de la variable 'solde'":
-        # Répartition des soldes
 
+    st.subheader("Distribution de la variable deposit par contact")
+    colors = ["#19D3F3", "#4B4B4B"]
+
+    fig28 = go.Figure()
+
+    for response in ['no', 'yes']:
+        fig28.add_trace(go.Histogram(
+            x=df[df['deposit'] == response]['contact'],
+            name=response,
+            marker_color=colors[1] if response == 'yes' else colors[0],
+            opacity=0.7
+        ))
+
+    fig28.update_layout(
+        title="Distribution de la variable Deposit selon le type de Contact",
+        xaxis_title="Type de Contact",
+        yaxis_title="Nombre de Clients",
+        barmode="group",
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(showgrid=False),
+        yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
+        showlegend=True
+    )
+    st.plotly_chart(fig28)
+elif selection == "Analyse de la variable 'solde'":
+    st.title("Analyse Variable 'solde'")
+        # Répartition des soldes
     st.subheader("Histogramme de Répartition par solde sur le compte")
     fig4 = px.histogram(df, x='balance', nbins=5)
     fig4.update_layout(
@@ -660,6 +772,46 @@ elif selection == "Analyse de la variable 'solde'":
         legend_title_text='Souscription'
     )
     st.plotly_chart(fig9)
+elif selection == "Analyse Variable 'Default'":
+    st.title("Analyse Variable 'Default'")
+    st.subheader("Distribution de la variable default")
+    fig31 = go.Figure()
+
+    counts = df['default'].value_counts()
+
+    fig31.add_trace(go.Bar(
+    x=counts.index,
+    y=counts.values,
+    marker_color=['#19D3F3', '#4B4B4B'],
+    opacity=0.7
+    ))
+
+    fig31.update_layout(
+    title="Distribution de default",
+    xaxis_title="Default",
+    yaxis_title="Nombre de clients",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)"),
+    showlegend=False
+    )
+    st.plotly_chart(fig31)
+elif selection == "Analyse de la variable 'balance'":
+    st.title("Analyse Variable 'balance'")
+    fig27 = go.Figure()
+    fig27.add_trace(go.Box(
+    x=df["balance"],
+    name="Balance",
+    marker_color="#222A2A",
+    opacity=0.7
+    ))
+    fig27.update_layout(
+    title="Distribution de la variable balance",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(gridcolor="rgba(210,210,210,0.5)")
+    )
+    st.plotly_chart(fig27)
 elif selection == "Crédits":
     st.title("Crédits")
     st.subheader("Participants au projet")
